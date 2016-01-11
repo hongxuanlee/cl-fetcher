@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
+	<style type="text/css">
+        .box{
+        	width: 200px;
+        	height: 80px;
+        	background: blue;
+            position: relative;
+            border:1px black solid;
+            margin:5px;
+        }
+        .text{
+        	width:auto;
+        	height:100px;
+        	background: grey;
+            margin-top: 50px;
+            padding: 20px;
+            color: white;
+        }
+	</style>
+	    <script src="../../node_modules/mocha/mocha.js"></script>
+        <script src="../../node_modules/chai/chai.js"></script>
+</head>
+<body>
+<div class = 'container' id='ctn'>
+	<div class ="box" id="box1">	
+	</div>
+	<div class ="box" id="box2">	
+	</div>
+	<div class ="box" id="box3">		
+	</div>
+	<div class="text" id="text">	
+	</div>
+	<div id="mocha"></div>
+</div>
+ <script>
+    mocha.ui('bdd'); 
+    mocha.reporter('html');
+    var expect = chai.expect;
+</script>
+<script src="../../browser/lib/test_tree.js"></script>
+ <script>
+    if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+    else { mocha.run(); }
+</script>
+</body>
+</html>

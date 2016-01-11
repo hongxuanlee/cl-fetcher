@@ -4,8 +4,7 @@
   "description": "fetch dymatic page data ",
   "main": "index.js",
   "scripts": {
-    // "test": "istanbul cover test/lib/**/*.js",
-    "test": "mocha test/lib",
+    "test": "mocha test/lib/*",
     "lint": "eslint src"
   },
   "author": "kino",
@@ -22,11 +21,13 @@
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
+    "chai": "~3.4.1",
     "del": "^2.2.0",
     "eslint": "^1.10.3",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-util": "^3.0.7",
+    "mocha": "~2.3.4",
     "run-sequence": "^1.1.5",
     "webpack": "^1.12.10"
   },
@@ -34,14 +35,10 @@
     "globals": {
       "describe": true,
       "it": true,
-      "phantom":true
+      "phantom": true
     },
     "parser": "babel-eslint",
     "rules": {
-      "quotes": [
-        2,
-        "single"
-      ],
       "linebreak-style": [
         2,
         "unix"
@@ -52,10 +49,6 @@
       ],
       "no-trailing-spaces": 2,
       "no-console": 0,
-      "space-before-function-paren": [
-        2,
-        "always"
-      ],
       "eqeqeq": [
         2,
         "allow-null"

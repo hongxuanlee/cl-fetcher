@@ -14,6 +14,14 @@ describe('fetcher page', function () {
 	it('should return', function (done) {
 		var testUrl = 'http://www.baidu.com';
 		var fetcherIns = new _fetcher2.default(testUrl, function () {
+			(0, _assert2.default)(true);
+			done();
+		});
+	});
+	it('should return', function (done) {
+		var testUrl = 'http://www.baidu.com';
+		var fetcherIns = new _fetcher2.default(testUrl, function () {
+			(0, _assert2.default)(true);
 			done();
 		});
 	});

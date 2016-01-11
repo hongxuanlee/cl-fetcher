@@ -32,8 +32,8 @@ class Fetcher {
 			errlog += msg;
 		});
 		proc.on('exit', () => {
-			console.log('log:', log);
-			console.log('errlog', errlog);
+			// console.log('log:', log);
+			// console.log('errlog', errlog);
 			self.cb();
 		});
 	}

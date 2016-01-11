@@ -17,7 +17,7 @@ gulp.task('clean', () => {
 	return del(['lib/*', 'test/lib/*']);
 });
 
-gulp.task('build', function() {
+gulp.task('build', () => {
 	return gulp.src('src/**/*.js')
 		.pipe(babel({
 			presets: ['es2015', 'stage-0']
@@ -28,7 +28,7 @@ gulp.task('build', function() {
 		.pipe(gulp.dest('lib'));
 });
 
-gulp.task('test-build', function() {
+gulp.task('test-build', () => {
 	return gulp.src('test/src/**/*.js')
 		.pipe(babel({
 			presets: ['es2015', 'stage-0']
@@ -42,7 +42,8 @@ gulp.task('test-build', function() {
 gulp.task('brower-build', (callback) => {
 	webpack({
 		entry: {
-			agent: './browser/src/browserAgent.js'
+			agent: './browser/src/browserAgent.js',
+			test_tree: './test/phantom/tree.js'
 		},
 		output: {
 			path: path.join(__dirname, 'browser/lib'),
@@ -68,10 +69,17 @@ gulp.task('brower-build', (callback) => {
 });
 
 gulp.task('test', () => {
-	child_process.exec("mocha --timeout 5000 test/lib", {}, function(err, stdout, stderr) {
-        console.log('[stdout]: \n' + stdout);
-        console.log('[stderr]: \n' + stderr);
-    });
+	child_process.exec("mocha-phantomjs test/html/*", {
+		stdio: "inherit"
+	}, function(err, stdout, stderr) {
+		console.log('[phantomTest]: \n' + stdout);
+		if (err) {
+			console.log('[phantomTest stderr]: \n' + stderr);
+		}
+		child_process.spawn("mocha", ['test/lib'], {
+			stdio: "inherit"
+		});
+	});
 });
 
-gulp.watch(['src/**/*.js', 'test/src/**/*.js', 'browser/src/**/*.js'], ['start']);
+gulp.watch(['src/**/*.js', 'test/src/**/*.js', 'test/phantom/**/*.js', 'browser/src/**/*.js'], ['start']);
