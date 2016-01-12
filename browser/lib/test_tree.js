@@ -54,24 +54,31 @@
 
 	describe("DOM Tree Tests", function () {
 	    var tree = (0, _tree2.default)();
-	    it("get dom tree", function () {
+	    it("should get dom tree", function () {
 	        expect(tree).to.not.equal(null);
 	    });
 
-	    it("root is body", function () {
+	    it("should root is body", function () {
 	        expect(tree.tag).to.equal('body');
 	    });
 
-	    it("has the right children count", function () {
+	    it("should has the right children count", function () {
 	        expect(tree.children.length).to.equal(1);
 	        expect(tree.children[0].children.length).to.equal(5);
 	    });
 
-	    it("has right attributes", function () {
+	    it("should has right attributes", function () {
 	        var container = tree.children[0];
 	        expect(container.tag).to.equal('div');
 	        expect(container.attr.class).to.equal('container');
 	        expect(container.attr.id).to.equal('ctn');
+	    });
+
+	    it("should has right react", function () {
+	        var bodyReact = tree.rect.join('-');
+	        var boxReact = tree.children[0].children[0].rect.join('-');
+	        expect(bodyReact).to.equal('0-5-400-446');
+	        expect(boxReact).to.equal('5-5-202-82');
 	    });
 	});
 
