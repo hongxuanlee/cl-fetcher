@@ -24,7 +24,7 @@ let openOriginalPage = (pageObject, url, callback) => {
 			let content = pageObject.content;
 			let script = fs.read('browser/lib/agent.js');
 			let pageContent = content.replace('<head>', '<head><script>' + script + '</script>');
-			fs.write('./result.html', pageContent);
+			// fs.write('./result.html', pageContent);
 			callback(pageContent);
 		}
 	});

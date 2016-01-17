@@ -1,8 +1,9 @@
+import md5 from 'md5';
 module.exports = () => {
 	let DEFAULT = {
 		style: [
 			'background-color', 'background-image', 'background-repeat',
-			'background-size', 'background-position','font-size', 
+			'background-size', 'background-position', 'font-size',  
 			'clear', 'color', 'display', 'float', 'opacity', 'text-align',
 			'visibility','position'
 		],
@@ -12,11 +13,11 @@ module.exports = () => {
 			'select', 'table'
 		],
 		attributeFilters: ['id', 'class']
-	}
+	};
 	let igonreChildren = (elem) => {
 		let ignoreChildrenElementReg = new RegExp('^(' + DEFAULT.ignoreChildrenElements.join('|') + ')$', 'i');
 		ignoreChildrenElementReg.lastIndex = 0;
-		return ignoreChildrenElementReg.test(elem.tagName)
+		return ignoreChildrenElementReg.test(elem.tagName);
 	};
 	let getStyles = (elem) => {
 		let elemStyle = {};
@@ -64,7 +65,7 @@ module.exports = () => {
 			}
 		});
 		return hasAttr ? ret : false;
-	}
+	};
 
 	let getTree = (elem) => {
 		let nodeInfo = {};
@@ -72,7 +73,11 @@ module.exports = () => {
 			nodeInfo.tag = elem.tagName.toLowerCase();
 			nodeInfo.rect = getRect(elem);
 			if (getAttr(elem)) nodeInfo.attr = getAttr(elem);
-			if (getStyles(elem)) nodeInfo.styles = getStyles(elem);
+			if (getStyles(elem)) {
+				let styles = getStyles(elem);
+				nodeInfo.styles = styles;
+				nodeInfo.styleFinger = md5(JSON.stringify(styles));
+			}
 			let children = [].slice.call(elem.childNodes);
 			let childArr = [];
 			if (children.length > 0) {
@@ -93,4 +98,4 @@ module.exports = () => {
 		}
 	};
 	return getTree(document.body);
-}
+};
