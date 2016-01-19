@@ -15,7 +15,7 @@ let saveTree = async(path, data) => {
 };
 
 /**
- * DOM tree -> text tree map 
+ * 剪枝 -> 非文本节点 
  */
 let pruning = (tree) => {
 	let queue = [];
@@ -34,7 +34,7 @@ let depthErgodic = (node, queue, index) => {
 	//leaf node
 	if (!children || !children.length) {
 		if (node.tag === 'textNode') {
-			findDeepNext(queue, ++index);
+			findDeepNext(queue, index);
 		} else {
 			removeNode(node, queue, index);
 		}
@@ -81,13 +81,12 @@ let removeNode = (node, queue, index) => {
 	parentNode.children.splice(index, 1);
 	let nextNodes = items.nextNodes;
 	let parentIndex = items.index;
-	// 同级节点已经遍历完
 	if (!nextNodes || !nextNodes.length) {
-		// 只剩下该节点，继续删除
+		// only have this node,delete this parent node
 		if (index === 0) {
 			removeNode(parentNode, queue, parentIndex);
-			// 寻找上级节点未遍历的同级节点
 		} else {
+			// find parent node not ergodic yet
 			findDeepNext(queue, ++parentIndex);
 		}
 	} else {
@@ -102,11 +101,51 @@ let removeNode = (node, queue, index) => {
 };
 
 
-// let simplify = (tree) => {   
-// };
+let simplify = (tree) => {
+	compress(pruning(tree));
+	return tree;
+};
+/**
+ * DOM tree -> text tree map 
+ * compress tree
+ * 
+ */
+let compress = (node) => {
+	let children = node.children;
+	if (!children || children.length === 0 ) {
+		return;
+	}
+	console.log(node.tag);
+	if (needCompress(children)) {
+		for (var i = 0, len = children.length; i < len; i++) {
+			node.children[i] = children[i].children[0];
+		}
+		compress(node);
+	} else {
+		for (var j = 0, lenth = children.length; j < lenth; j++) {
+			compress(children[j]);
+		}
+	}
+	return node;
+};
+
+let needCompress = (nodes) => {
+	let item;
+	for (var i = 0; i < nodes.length; i++) {
+		item = nodes[i];
+		if (item.children && item.children.length === 1 && item.children[0].tagName !== 'textNode') {
+			continue;
+		} else {
+			return false;
+		}
+	}
+	return true;
+};
 
 module.exports = {
 	getTree,
+	saveTree,
 	pruning,
-	saveTree
+	compress,
+	simplify
 };
