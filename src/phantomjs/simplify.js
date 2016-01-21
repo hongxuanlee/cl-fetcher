@@ -115,7 +115,6 @@ let compress = (node) => {
 	if (!children || children.length === 0 ) {
 		return;
 	}
-	console.log(node.tag);
 	if (needCompress(children)) {
 		for (var i = 0, len = children.length; i < len; i++) {
 			node.children[i] = children[i].children[0];
