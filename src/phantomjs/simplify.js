@@ -1,21 +1,5 @@
-import 'babel-polyfill';
-import fs from 'fs';
-import promise from 'bluebird';
-
-let readFile = promise.promisify(fs.readFile);
-let writeFile = promise.promisify(fs.writeFile);
-
-let getTree = async(path) => {
-	let data = await readFile(path);
-	return JSON.parse(data);
-};
-
-let saveTree = async(path, data) => {
-	return await writeFile(path, JSON.stringify(data));
-};
-
 /**
- * 剪枝 -> 非文本节点 
+ * 剪枝，剪去非文本节点 
  */
 let pruning = (tree) => {
 	let queue = [];
@@ -49,11 +33,9 @@ let depthErgodic = (node, queue, index) => {
 		});
 		depthErgodic(curNode, queue, 0);
 	}
-
 };
 
 // find next node ergodic
-
 let findDeepNext = (queue, index) => {
 	index = index || 0;
 	let nodeItems = queue.pop();
@@ -78,7 +60,8 @@ let removeNode = (node, queue, index) => {
 	if (!items) return;
 	let parentNode = items.node;
 	// remove current node
-	parentNode.children.splice(index, 1);
+	let parentChildren = parentNode.children;
+	parentChildren.splice(index, 1);
 	let nextNodes = items.nextNodes;
 	let parentIndex = items.index;
 	if (!nextNodes || !nextNodes.length) {
@@ -116,12 +99,17 @@ let compress = (node) => {
 		return;
 	}
 	if (needCompress(children)) {
-		for (var i = 0, len = children.length; i < len; i++) {
-			node.children[i] = children[i].children[0];
+		for (let i = 0, len = children.length; i < len; i++) {
+			let pre = children[i];
+			let cur = children[i].children[0];
+			let compress = pre.compress || []; 
+			compress.push(pre.tag);
+			cur.compress = compress;
+			node.children[i] = cur;
 		}
 		compress(node);
 	} else {
-		for (var j = 0, lenth = children.length; j < lenth; j++) {
+		for (let j = 0, lenth = children.length; j < lenth; j++) {
 			compress(children[j]);
 		}
 	}
@@ -130,7 +118,7 @@ let compress = (node) => {
 
 let needCompress = (nodes) => {
 	let item;
-	for (var i = 0; i < nodes.length; i++) {
+	for (let i = 0; i < nodes.length; i++) {
 		item = nodes[i];
 		if (item.children && item.children.length === 1 && item.children[0].tagName !== 'textNode') {
 			continue;
@@ -142,8 +130,6 @@ let needCompress = (nodes) => {
 };
 
 module.exports = {
-	getTree,
-	saveTree,
 	pruning,
 	compress,
 	simplify

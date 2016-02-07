@@ -12,7 +12,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 describe('fetcher page', function () {
 	it('should return', function (done) {
-		var testUrl = 'http://www.baidu.com';
+		var testUrl = 'file:///Users/kino/Workspace/cl-fetcher/test/html/fetcher2.html';
+		var fetcherIns = new _fetcher2.default(testUrl, function () {
+			(0, _assert2.default)(true);
+			done();
+		});
+	});
+	it('should return', function (done) {
+		var testUrl = 'file:///Users/kino/Workspace/cl-fetcher/test/html/fetcher1.html';
 		var fetcherIns = new _fetcher2.default(testUrl, function () {
 			(0, _assert2.default)(true);
 			done();

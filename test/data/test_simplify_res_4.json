@@ -13,7 +13,8 @@
 			"children": [{
 				"tag": "textNode",
 				"text": "here is content 1 !"
-			}]
+			}],
+			"compress": ["div"]
 		}, {
 			"tag": "div",
 			"children": [{
@@ -26,7 +27,8 @@
 					"tag": "textNode",
 					"text": "here is text2 content!"
 				}]
-			}]
+			}],
+			"compress": ["div"]
 		}]
 	}]
 }

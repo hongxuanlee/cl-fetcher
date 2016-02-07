@@ -82,4 +82,10 @@ gulp.task('test', () => {
 	});
 });
 
-gulp.watch(['src/**/*.js', 'test/src/**/*.js', 'test/phantom/**/*.js', 'browser/src/**/*.js'], ['start']);
+gulp.watch(['src/**/*.js', 'test/src/**/*.js', 'test/phantom/**/*.js', 'browser/src/**/*.js', 'test/data/**/*'], ['start']);
+
+
+
+
+
+

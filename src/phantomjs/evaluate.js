@@ -14,7 +14,7 @@ module.exports = (option, remain) => {
 				eventList.splice(0, remove);
 			}
 			return eventList;
-		}
+		};
 	/**
 	 * To prevent repeated to add xhr event
 	 */
@@ -28,7 +28,7 @@ module.exports = (option, remain) => {
 			}
 		}
 		return hasListen;
-	}
+	};
 
 	/**
 	 * filter customize event;
@@ -59,16 +59,16 @@ module.exports = (option, remain) => {
 			if (node && (node.toString().indexOf('Element') > -1)) {
 				console.log('id:' + node.getAttribute('id') + ' tag:' + node.tagName);
 				handles.forEach(function(item){
-					ev.target = node
+					ev.target = node;
 					item(ev);
-				})
+				});
 			}
 		}
 	};
 
 	let addXhrEvent = () => {
 		document.addEventListener('xhrRequestOpen', function(e) {
-			console.log('xhrOpen', e.opt.url);
+			console.log('xhrOpen', JSON.stringify(e.opt.url));
 			isXhr = true;
 		});
 	};
@@ -83,8 +83,8 @@ module.exports = (option, remain) => {
 		return {
 			statusChange: isXhr,
 			eventRemain: eventList.length
-		}
+		};
 
-	}
+	};
 	return main();
 };

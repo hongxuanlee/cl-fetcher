@@ -274,7 +274,6 @@
 
 	'use strict';
 
-	var _arguments = arguments;
 	/**
 	 * only adapted XMLHttpRequest object.
 	 **/
@@ -285,8 +284,8 @@
 			var e = document.createEvent('Events');
 			e.initEvent('xhrRequestOpen');
 			var option = {
-				url: _arguments[1],
-				method: _arguments[0]
+				url: arguments.length <= 1 ? undefined : arguments[1],
+				method: arguments.length <= 0 ? undefined : arguments[0]
 			};
 			e.opt = option;
 			document.dispatchEvent(e);
@@ -326,8 +325,12 @@
 			(function () {
 				var oldFunc = xhrObject[funcName];
 				xhrObject[funcName] = function () {
-					injectFunc.apply(undefined, _arguments);
-					oldFunc.apply(undefined, _arguments);
+					for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+						args[_key] = arguments[_key];
+					}
+
+					injectFunc.apply(this, args);
+					oldFunc.apply(this, args);
 				};
 			})();
 		}

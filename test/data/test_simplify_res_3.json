@@ -16,8 +16,9 @@
 			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "textNode",
-				"text": "here is content 1 !"
-			}]
+				"text": "here is content 0 !"
+			}],
+			"compress": ["div"]
 		}, {
 			"tag": "div",
 			"children": [{
@@ -30,7 +31,8 @@
 					"tag": "textNode",
 					"text": "here is text2 content!"
 				}]
-			}]
+			}],
+			"compress": ["div"]
 		}]
 	}]
 }

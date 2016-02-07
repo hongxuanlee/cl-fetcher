@@ -4,12 +4,12 @@
 let xhrObjectList = [];
 
 let proxyXhrOpen = () => {
-	let handle = () => {
+	let handle = (...args) => {
 		let e = document.createEvent('Events');
 		e.initEvent('xhrRequestOpen');
 		let option = {
-			url: arguments[1],
-			method: arguments[0]
+			url: args[1],
+			method: args[0]
 		};
 		e.opt = option;
 		document.dispatchEvent(e);
@@ -47,9 +47,9 @@ let proxy = (funcName, injectFunc) => {
 	let xhrObject = getXhrProto();
 	if (xhrObject && xhrObject[funcName] && typeof xhrObject[funcName] === 'function') {
 		let oldFunc = xhrObject[funcName];
-		xhrObject[funcName] = () => {
-			injectFunc.apply(this, arguments);
-			oldFunc.apply(this, arguments);
+		xhrObject[funcName] = function(...args){
+			injectFunc.apply(this, args);
+			oldFunc.apply(this, args);
 		};
 	}
 	return true;

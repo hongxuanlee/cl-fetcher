@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta charset="UTF-8">
+	<style type="text/css">
+        .box{
+        	width: 200px;
+        	height: 80px;
+        	background: blue;
+            position: relative;
+            border:1px black solid;
+            margin:5px;
+        }
+        .text{
+        	width:auto;
+        	height:100px;
+        	background: grey;
+            margin-top: 50px;
+            padding: 20px;
+            color: white;
+        }
+	</style>
+</head>
+<body>
+<div class = 'container' id='ctn'>
+	<div class ="box" id="box1">
+		
+	</div>
+	<div class ="box" id="box2">
+		
+	</div>
+	<div class ="box" id="box3">
+		
+	</div>
+	<div class="text" id="text">
+		
+	</div>
+</div>
+    <script type="text/javascript">
+    var box1 = $('box1');
+	function $(id){
+		return document.getElementById(id);
+	}
+	$('box1').addEventListener('click',function(){
+		console.log('first');
+	})
+	$('box1').addEventListener('click',function(){
+		console.log('second');
+	})
+    $('box1').addEventListener('click',function(){
+		console.log('third');
+		var newdiv = document.createElement('div');
+		newdiv.setAttribute('class','box');
+		newdiv.setAttribute('id','newbox');
+		var text = document.createTextNode('here is new content!');
+		newdiv.appendChild(text);
+		$('ctn').insertBefore(newdiv,$('text'));
+		newdiv.addEventListener('click',function(){
+			console.log("new");
+			$('text').innerHTML = "newDiv is clicked!"
+			useAjax('../data/test_simplify_1.json');
+		})
+		useAjax('../data/test_simplify_2.json');
+	})
+	$('box2').addEventListener('click',function(){
+		console.log('box2');
+		// if($('box1')){
+		// 	$('ctn').removeChild(box1);
+		// }
+		$('text').innerHTML = "box2 is clicked!"
+		useAjax('../data/test_diff_2.json');
+	})
+	$('box3').addEventListener('click',function(){
+		console.log('box3');
+		var div4 = document.createElement('div');
+		div4.setAttribute('class','box');
+		div4.setAttribute('id','newbox');
+		var text = document.createTextNode('here is div4 content!');
+		div4.appendChild(text);
+		$('ctn').appendChild(div4);
+		useAjax();
+	}) 
+	function useAjax(name){
+		var xhr = new XMLHttpRequest();
+		var url = name ? name : "../data/test_diff_1.json";
+		try{
+		   xhr.open("GET",url);
+		   xhr.send(null);
+		}catch(e){
+		}
+		xhr.onreadystatechange = function(){
+		  if(this.readyState == 4) {
+		  		console.log('ready ok '+ url);
+          }  
+		}
+		console.log(xhr);
+	}   
+</script>
+</body>
+</html>
