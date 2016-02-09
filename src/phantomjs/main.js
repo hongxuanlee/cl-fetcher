@@ -1,4 +1,5 @@
 import log from './log.js';
+import util from './util.js';
 phantom.onError = (msg, trace) => {
 	let msgStack = ['ERROR: ' + msg];
 	if (trace && trace.length) {
@@ -9,6 +10,7 @@ phantom.onError = (msg, trace) => {
 	}
 	log.error(msgStack.join('\n'));
 };
+
 
 import WebPage from 'webpage';
 import system from 'system';
@@ -22,6 +24,17 @@ let pageStateMatrix = [];
 let treeQueue = [];
 let status = 0;
 
+// add login cookie
+let addCookie = (cookieStr, url) => {
+	if(! cookieStr || !cookieStr.length){
+		return;
+	}
+	let cookieArr = util.cookie(cookieStr, url);
+	cookieArr.forEach((item) => {
+		log.debug(JSON.stringify(item));
+		phantom.addCookie(item);
+	});
+};
 /**
  * to inject args to evaluate script
  */
@@ -39,7 +52,7 @@ let isObject = (source) => {
 let saveTree = (tree, name, options) => {
 	options = options || {};
 	let root = options.root ? options.root : phantom.libraryPath + '/../../data';
-	let dirname = options.dirname ? options.dirname : 'test';
+	let dirname = options.dirname ? options.dirname : dirName;
 	if (!name) {
 		let time = Date.now();
 		name = time;
@@ -61,7 +74,7 @@ let saveTree = (tree, name, options) => {
 let getTree = (name, options) => {
 	options = options || {};
 	let root = options.root ? options.root : phantom.libraryPath + '/../../data';
-	let dirname = options.dirname ? options.dirname : 'test';
+	let dirname = options.dirname ? options.dirname : dirName;
 	let file = root + '/' + dirname + '/' + name + '.json';
 	log.debug('get tree from ' + file);
 	if (fs.exists(file)) {
@@ -84,6 +97,7 @@ let diffTree = (tree) => {
 	}
 	return true;
 };
+
 /**
  * to ergodic page state
  */
@@ -138,7 +152,7 @@ let openOriginalPage = (pageObject, url, callback) => {
 			let content = pageObject.content;
 			let script = fs.read('browser/lib/agent.js');
 			let pageContent = content.replace('<head>', '<head><script>' + script + '</script>');
-			// fs.write('./result.html', pageContent);
+			// fs.write('./res.html', pageContent);
 			callback(pageContent);
 		}
 	});
@@ -165,10 +179,13 @@ let pageHandle = (pageContent, isRecover, remain) => {
 	};
 	curpage.onLoadFinished = (status) => {
 		if (status !== 'success') {
-			log.error('FAIL to load this url');
+			log.error('Fail to load this url');
 		} else {
 			log.debug('curpage first load finished');
-			ergodicState(curpage, pageContent, isRecover, remain);
+			window.setTimeout(function(){
+				ergodicState(curpage, pageContent, isRecover, remain);
+			},5000);
+			
 		}
 	};
 };
@@ -178,7 +195,10 @@ if (system.args.length === 1) {
 	phantom.exit(1);
 }
 const url = system.args[1];
+const dirName = system.args[2];
+const cookieStr = system.args[3] || '';
 let Main = () => {
+	addCookie(cookieStr, url);
 	let originalPage = WebPage.create();
 	openOriginalPage(originalPage, url, (res) => {
 		originalPage.close();

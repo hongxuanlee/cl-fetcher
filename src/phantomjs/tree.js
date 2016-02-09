@@ -79,13 +79,13 @@ let md5 = function(){"use strict";function n(n,r){var t=(65535&n)+(65535&r),u=(n
 
 	let getTree = (elem) => {
 		let nodeInfo = {};
-		if (elem.nodeType === 1 && elem.tagName !== "SCRIPT") {
+		if (elem.nodeType === 1 && elem.tagName !== "SCRIPT" && elem.tagName !== "STYLE") {
 			nodeInfo.tag = elem.tagName.toLowerCase();
 			nodeInfo.rect = getRect(elem);
 			if (getAttr(elem)) nodeInfo.attr = getAttr(elem);
 			if (getStyles(elem)) {
 				let styles = getStyles(elem);
-				nodeInfo.styles = styles;
+				// nodeInfo.styles = styles;
 				nodeInfo.styleFinger = md5(JSON.stringify(styles));
 			}
 			let children = Array.prototype.slice.call(elem.childNodes);

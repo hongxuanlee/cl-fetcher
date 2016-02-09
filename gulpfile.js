@@ -76,7 +76,7 @@ gulp.task('test', () => {
 		if (err) {
 			console.log('[phantomTest stderr]: \n' + stderr);
 		}
-		child_process.spawn("mocha", ['test/lib'], {
+		child_process.spawn("mocha", ['test/lib', '--timeout', '15000'], {
 			stdio: "inherit"
 		});
 	});

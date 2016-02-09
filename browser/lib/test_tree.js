@@ -226,13 +226,13 @@
 
 		var getTree = function getTree(elem) {
 			var nodeInfo = {};
-			if (elem.nodeType === 1 && elem.tagName !== "SCRIPT") {
+			if (elem.nodeType === 1 && elem.tagName !== "SCRIPT" && elem.tagName !== "STYLE") {
 				nodeInfo.tag = elem.tagName.toLowerCase();
 				nodeInfo.rect = getRect(elem);
 				if (getAttr(elem)) nodeInfo.attr = getAttr(elem);
 				if (getStyles(elem)) {
 					var styles = getStyles(elem);
-					nodeInfo.styles = styles;
+					// nodeInfo.styles = styles;
 					nodeInfo.styleFinger = md5(JSON.stringify(styles));
 				}
 				var children = Array.prototype.slice.call(elem.childNodes);

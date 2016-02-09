@@ -2,15 +2,23 @@
  * 剪枝，剪去非文本节点 
  */
 let pruning = (tree) => {
-	let queue = [];
-	depthErgodic(tree, queue, 0);
+	let stack = [];
+	depthErgodic(tree, stack, 0);
 	return tree;
 };
 
 /**
  * 深度遍历剪枝
+ * node: 节点
+ * index: node节点基于父节点的索引
+ * stack: array
+ * {
+ * 	 node:推入栈的节点
+ * 	 nodeIndex:node相对于父索引的节点
+ * 	 nextIndex: 取栈时遍历节点的索引
+ * }
  */
-let depthErgodic = (node, queue, index) => {
+let depthErgodic = (node, stack, index) => {
 	if (!node) {
 		return;
 	}
@@ -18,68 +26,68 @@ let depthErgodic = (node, queue, index) => {
 	//leaf node
 	if (!children || !children.length) {
 		if (node.tag === 'textNode') {
-			findDeepNext(queue, index);
+			findDeepNext(stack);
 		} else {
-			removeNode(node, queue, index);
+			removeNode(node, stack, index);
 		}
 	} else {
 		// element node
 		let curNode = children[0];
-		let nextNodes = children.slice(1);
-		queue.push({
+		stack.push({
 			node,
-			nextNodes,
-			index: 0
+			nodeIndex: index,
+			nextIndex: 1
 		});
-		depthErgodic(curNode, queue, 0);
+		depthErgodic(curNode, stack, 0);
 	}
 };
 
 // find next node ergodic
-let findDeepNext = (queue, index) => {
-	index = index || 0;
-	let nodeItems = queue.pop();
+let findDeepNext = (stack) => {
+	let nodeItems = stack.pop();
 	if (!nodeItems) return;
-	let nextNodes = nodeItems.nextNodes;
-	if (nextNodes && nextNodes.length) {
-		let nextNode = nextNodes[0];
-		queue.push({
+	let sibling = nodeItems.node.children;
+	let curIndex = nodeItems.nextIndex;
+	if (sibling && sibling[curIndex]) {
+		stack.push({
 			node: nodeItems.node,
-			nextNodes: nextNodes.slice(1),
-			index: nodeItems.index
+			nodeIndex: nodeItems.nodeIndex,
+			nextIndex: parseInt(curIndex) + 1
 		});
-		depthErgodic(nextNode, queue, ++index);
+		depthErgodic(sibling[curIndex], stack, curIndex);
 	} else {
-		findDeepNext(queue, parseInt(nodeItems.index) + 1);
+		findDeepNext(stack);
 	}
 };
 
 // remove no textNode branch
-let removeNode = (node, queue, index) => {
-	let items = queue.pop();
-	if (!items) return;
-	let parentNode = items.node;
+let removeNode = (node, stack, index) => {
+	let nodeItems = stack.pop();
+	if (!nodeItems) return;
+	let parentNode = nodeItems.node;
 	// remove current node
-	let parentChildren = parentNode.children;
-	parentChildren.splice(index, 1);
-	let nextNodes = items.nextNodes;
-	let parentIndex = items.index;
-	if (!nextNodes || !nextNodes.length) {
+	let sibling = parentNode.children;
+	if (!sibling || !sibling[index]) {
+		return;
+	}
+	sibling.splice(index, 1);
+	let nodeIndex = nodeItems.nodeIndex;
+	let nextIndex = nodeItems.nextIndex;
+	if (!sibling[nextIndex]) {
 		// only have this node,delete this parent node
-		if (index === 0) {
-			removeNode(parentNode, queue, parentIndex);
+		if (index === 0 && sibling.length === 1) {
+			removeNode(parentNode, stack, nodeIndex);
 		} else {
 			// find parent node not ergodic yet
-			findDeepNext(queue, ++parentIndex);
+			findDeepNext(stack);
 		}
 	} else {
-		let nextNode = nextNodes[0];
-		queue.push({
+		stack.push({
 			node: parentNode,
-			nextNodes: nextNodes.slice(1),
-			index
+			nodeIndex,
+			nextIndex:nextIndex
 		});
-		depthErgodic(nextNode, queue, index);
+		depthErgodic(sibling[index], stack, index);
 	}
 };
 
@@ -95,14 +103,14 @@ let simplify = (tree) => {
  */
 let compress = (node) => {
 	let children = node.children;
-	if (!children || children.length === 0 ) {
+	if (!children || children.length === 0) {
 		return;
 	}
 	if (needCompress(children)) {
 		for (let i = 0, len = children.length; i < len; i++) {
 			let pre = children[i];
 			let cur = children[i].children[0];
-			let compress = pre.compress || []; 
+			let compress = pre.compress || [];
 			compress.push(pre.tag);
 			cur.compress = compress;
 			node.children[i] = cur;

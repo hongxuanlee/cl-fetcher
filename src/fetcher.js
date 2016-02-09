@@ -6,15 +6,16 @@ const spawn = child_process.spawn;
 const phantomjs = require('phantomjs');
 const binPath = phantomjs.path;
 
-// const DEFAULT_DATA_DIRNAME = process.cwd();
 const PHANTOMJS_DIR = path.join(__dirname, 'phantomjs');
 const PHANTOMJS_FILE = path.join(PHANTOMJS_DIR, 'main.js');
 
 class Fetcher {
-	constructor(url, cb, option) {
+	constructor(url, dirname, cb, option) {
 		this.url = url;
+		this.dirname = dirname;
 		this.cb = cb;
 		this.option = option || {};
+		this.cookie = this.option.cookie || '';
 		this.init();
 	}
 	init() {
@@ -22,7 +23,7 @@ class Fetcher {
 	}
 	process() {
 		let self = this;
-		let proc = spawn(binPath, [PHANTOMJS_FILE, this.url], {
+		let proc = spawn(binPath, [PHANTOMJS_FILE, self.url, self.dirname, self.cookie], {
 			stdio: "inherit"
 		});
 		proc.on('exit', () => {

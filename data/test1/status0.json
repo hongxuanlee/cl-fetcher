@@ -1,0 +1,1 @@
+{"children":[{"attr":{"class":"container","id":"ctn"},"children":[{"tag":"textNode","text":"here is content 1 !","compress":["div"]},{"tag":"textNode","text":"here is new content!","compress":["div"]}],"rect":[8,8,384,549],"styleFinger":"54816eba88980705efd5f0621a3002d4","tag":"div"}],"rect":[8,8,384,549],"styleFinger":"54816eba88980705efd5f0621a3002d4","tag":"body"}

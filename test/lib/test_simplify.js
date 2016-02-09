@@ -63,7 +63,7 @@ describe('Tree simplyfy', function () {
 						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_1.json');
 						expectTree = getTree(expectPath);
 
-						_assert2.default.deepEqual(expectTree, res);
+						_assert2.default.deepEqual(res, expectTree);
 
 					case 6:
 					case 'end':
@@ -85,7 +85,7 @@ describe('Tree simplyfy', function () {
 						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_2.json');
 						expectTree = getTree(expectPath);
 
-						_assert2.default.deepEqual(expectTree, res);
+						_assert2.default.deepEqual(res, expectTree);
 
 					case 6:
 					case 'end':
@@ -107,7 +107,7 @@ describe('Tree simplyfy', function () {
 						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_3.json');
 						expectTree = getTree(expectPath);
 
-						_assert2.default.deepEqual(expectTree, res);
+						_assert2.default.deepEqual(res, expectTree);
 
 					case 6:
 					case 'end':
@@ -129,7 +129,7 @@ describe('Tree simplyfy', function () {
 						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_4.json');
 						expectTree = getTree(expectPath);
 
-						_assert2.default.deepEqual(expectTree, res);
+						_assert2.default.deepEqual(res, expectTree);
 
 					case 6:
 					case 'end':
@@ -151,7 +151,7 @@ describe('Tree simplyfy', function () {
 						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_5.json');
 						expectTree = getTree(expectPath);
 
-						_assert2.default.deepEqual(expectTree, res);
+						_assert2.default.deepEqual(res, expectTree);
 
 					case 6:
 					case 'end':

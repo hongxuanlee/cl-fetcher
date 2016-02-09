@@ -26,7 +26,7 @@ describe('Tree simplyfy', () => {
 		let res = simplify.pruning(tree);
 		let expectPath = Path.join(__dirname, '../data/test_simplify_res_1.json');
 		let expectTree = getTree(expectPath);
-		assert.deepEqual(expectTree, res);
+		assert.deepEqual(res, expectTree);
 	});
 
 	it('should cut no textNode branch', async() => {
@@ -35,7 +35,7 @@ describe('Tree simplyfy', () => {
 		let res = simplify.pruning(tree);
 		let expectPath = Path.join(__dirname, '../data/test_simplify_res_2.json');
 		let expectTree = getTree(expectPath);
-		assert.deepEqual(expectTree, res);
+		assert.deepEqual(res,expectTree);
 	});
 
 	it('should compress', async() => {
@@ -44,7 +44,7 @@ describe('Tree simplyfy', () => {
 		let res = simplify.compress(tree);
 		let expectPath = Path.join(__dirname, '../data/test_simplify_res_3.json');
 		let expectTree = getTree(expectPath);
-		assert.deepEqual(expectTree, res);
+		assert.deepEqual(res,expectTree);
 	});
 
 	it('should simplyfy', async() => {
@@ -53,7 +53,7 @@ describe('Tree simplyfy', () => {
 		let res = simplify.simplify(tree);
 		let expectPath = Path.join(__dirname, '../data/test_simplify_res_4.json');
 		let expectTree = getTree(expectPath);
-		assert.deepEqual(expectTree,res);
+		assert.deepEqual(res,expectTree);
 	});
 
 	it('should simplyfy', async() => {
@@ -62,7 +62,7 @@ describe('Tree simplyfy', () => {
 		let res = simplify.simplify(tree);
 		let expectPath = Path.join(__dirname, '../data/test_simplify_res_5.json');
 		let expectTree = getTree(expectPath);
-		assert.deepEqual(expectTree,res);
+		assert.deepEqual(res,expectTree);
 	});
 
 });
