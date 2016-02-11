@@ -14,7 +14,7 @@ gulp.task('start', () => {
 });
 
 gulp.task('clean', () => {
-	return del(['lib/*', 'test/lib/*']);
+	return del(['lib/*', 'test/lib/*', 'data/*']);
 });
 
 gulp.task('build', () => {
@@ -82,7 +82,7 @@ gulp.task('test', () => {
 	});
 });
 
-gulp.watch(['src/**/*.js', 'test/src/**/*.js', 'test/phantom/**/*.js', 'browser/src/**/*.js', 'test/data/**/*'], ['start']);
+gulp.watch(['src/**/*.js', 'test/src/**/*.js', 'test/phantom/**/*.js', 'browser/src/**/*.js'], ['start']);
 
 
 

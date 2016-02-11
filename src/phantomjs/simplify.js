@@ -73,9 +73,9 @@ let removeNode = (node, stack, index) => {
 	sibling.splice(index, 1);
 	let nodeIndex = nodeItems.nodeIndex;
 	let nextIndex = nodeItems.nextIndex;
-	if (!sibling[nextIndex]) {
+	if (!sibling[index]) {
 		// only have this node,delete this parent node
-		if (index === 0 && sibling.length === 1) {
+		if (sibling.length === 0) {
 			removeNode(parentNode, stack, nodeIndex);
 		} else {
 			// find parent node not ergodic yet

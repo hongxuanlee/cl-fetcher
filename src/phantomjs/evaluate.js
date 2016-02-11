@@ -8,13 +8,13 @@ module.exports = (option, remain) => {
 	let eventList;
 
 	let getEventList = () => {
-			let eventList = eventAgent.getEventList();
-			if (remain) {
-				let remove = eventList.length - remain;
-				eventList.splice(0, remove);
-			}
-			return eventList;
-		};
+		let eventList = eventAgent.getEventList();
+		if (remain) {
+			let remove = eventList.length - remain;
+			eventList.splice(0, remove);
+		}
+		return eventList;
+	};
 	/**
 	 * To prevent repeated to add xhr event
 	 */
@@ -54,16 +54,28 @@ module.exports = (option, remain) => {
 			let node = item.node;
 			let type = item.type;
 			let handles = item.handles;
-			let ev = {};
 			console.log(node, type);
-			if (node && (node.toString().indexOf('Element') > -1)) {
-				console.log('id:' + node.getAttribute('id') + ' tag:' + node.tagName);
-				handles.forEach(function(item){
-					ev.target = node;
-					item(ev);
+			if (node) {
+				// console.log('id:' + node.getAttribute('id') + ' class:' + node.className + 'tag:' + node.tagName);
+				handles.forEach(function(item) {
+					handleExec(node, item);
 				});
 			}
 		}
+	};
+
+	let handleExec = (node, item) => {
+		let children = node.childNodes;
+		let ev = {};
+		ev.target = node;
+		item(ev);
+		if (children) {
+			for (let i = 0, len = children.length; i < len; i++) {
+				let cur = children[i];
+				handleExec(cur, item);
+			}
+		}
+
 	};
 
 	let addXhrEvent = () => {

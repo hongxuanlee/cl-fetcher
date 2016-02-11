@@ -1,20 +1,17 @@
 {
 	"tag": "body",
-	"styleFinger": "17bf6cdafdac9ba71ad494deb2e48346",
 	"children": [{
 		"tag": "div",
 		"attr": {
 			"id": "ctn",
 			"class": "container"
 		},
-		"styleFinger": "17bf6cdafdac9ba71ad494deb2e48346",
 		"children": [{
 			"tag": "div",
 			"attr": {
 				"id": "box1",
 				"class": "box"
 			},
-			"styleFinger": "254e6013f2452b42a44e210247884520",
 			"children": []
 		}, {
 			"tag": "div",
@@ -22,14 +19,12 @@
 				"id": "box2",
 				"class": "box"
 			},
-			"styleFinger": "254e6013f2452b42a44e210247884520",
 			"children": []
 		}, {
 			"tag": "div",
 			"attr": {
 				"class": "text1"
 			},
-			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "div",
 				"children": [{
@@ -40,7 +35,6 @@
 					"attr": {
 						"class": "span1"
 					},
-					"styleFinger": "254e6013f2452b42a44e210247520212",
 					"children": []
 				}]
 			}]
@@ -50,7 +44,6 @@
 				"id": "text",
 				"class": "text2"
 			},
-			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "div",
 				"children": [{
@@ -58,7 +51,6 @@
 					"text": "here is title!"
 				}, {
 					"tag": "span",
-					"styleFinger": "254e6013f2452b42a44e210247884520",
 					"children": [{
 						"tag": "textNode",
 						"text": "here is text2 content!"
@@ -69,8 +61,7 @@
 			"tag": "div",
 			"attr": {
 				"id": "mocha"
-			},
-			"styleFinger": "0a41928f5dd97e430f3e398891c2fedb"
+			}
 		}]
 	}]
 }

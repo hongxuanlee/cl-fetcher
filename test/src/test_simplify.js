@@ -38,6 +38,24 @@ describe('Tree simplyfy', () => {
 		assert.deepEqual(res,expectTree);
 	});
 
+	it('should cut no textNode branch 2', async() => {
+		let path = Path.join(__dirname, '../data/test_simplify_6.json');
+		let tree = getTree(path);
+		let res = simplify.pruning(tree);
+		let expectPath = Path.join(__dirname, '../data/test_simplify_res_6.json');
+		let expectTree = getTree(expectPath);
+		assert.deepEqual(res, expectTree);
+	});
+
+	it('should cut no textNode branch 2', async() => {
+		let path = Path.join(__dirname, '../data/test_simplify_7.json');
+		let tree = getTree(path);
+		let res = simplify.pruning(tree);
+		let expectPath = Path.join(__dirname, '../data/test_simplify_res_7.json');
+		let expectTree = getTree(expectPath);
+		assert.deepEqual(res, expectTree);
+	});
+
 	it('should compress', async() => {
 		let path = Path.join(__dirname, '../data/test_simplify_3.json');
 		let tree = getTree(path);

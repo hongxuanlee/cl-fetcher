@@ -19,21 +19,33 @@
 				"id": "box2",
 				"class": "box"
 			},
-			"children": []
+			"children": [{
+				"tag": "span",
+				"attr": {
+					"class": "dd0"
+				}
+			}, {
+				"tag": "textNode",
+				"text": "here is content 0 !"
+			}, {
+				"tag": "span",
+				"attr": {
+					"class": "dd0"
+				}
+			}]
 		}, {
 			"tag": "div",
 			"attr": {
 				"class": "text1"
 			},
 			"children": [{
-				"tag": "textNode",
-				"text": "here is content 1 !"
-			}, {
 				"tag": "span",
 				"attr": {
-					"class": "span1"
-				},
-				"children": []
+					"class": "dd1"
+				}
+			}, {
+				"tag": "textNode",
+				"text": "here is content 1 !"
 			}]
 		}, {
 			"tag": "div",
@@ -43,12 +55,20 @@
 			},
 			"children": [{
 				"tag": "textNode",
-				"text": "here is title!"
+				"text": "here is content 2!"
 			}, {
 				"tag": "span",
+				"attr": {
+					"class": "dd"
+				},
 				"children": [{
 					"tag": "textNode",
-					"text": "here is text2 content!"
+					"text": "here is content 3!"
+				}, {
+					"tag": "span",
+					"attr": {
+						"class": "dd3"
+					}
 				}]
 			}]
 		}, {

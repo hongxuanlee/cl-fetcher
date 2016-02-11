@@ -1,34 +1,26 @@
 {
 	"tag": "body",
-	"rect": [0, 5, 1418, 549],
-	"styleFinger": "17bf6cdafdac9ba71ad494deb2e48346",
 	"children": [{
 		"tag": "div",
-		"rect": [0, 5, 1418, 549],
 		"attr": {
 			"id": "ctn",
 			"class": "container"
 		},
-		"styleFinger": "17bf6cdafdac9ba71ad494deb2e48346",
 		"children": [{
 			"tag": "div",
-			"rect": [0, 224, 1418, 140],
 			"attr": {
 				"class": "text1"
 			},
-			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "textNode",
 				"text": "here is content 1 !"
 			}]
 		}, {
 			"tag": "div",
-			"rect": [0, 414, 1418, 140],
 			"attr": {
 				"id": "text",
 				"class": "text2"
 			},
-			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "textNode",
 				"text": "here is new content!"

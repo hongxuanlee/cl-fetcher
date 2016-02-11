@@ -1,63 +1,49 @@
 {
 	"tag": "body",
-	"rect": [0, 5, 1418, 549],
-	"styleFinger": "17bf6cdafdac9ba71ad494deb2e48346",
 	"children": [{
 		"tag": "div",
-		"rect": [0, 5, 1418, 549],
 		"attr": {
 			"id": "ctn",
 			"class": "container"
 		},
-		"styleFinger": "17bf6cdafdac9ba71ad494deb2e48346",
 		"children": [{
 			"tag": "div",
-			"rect": [5, 5, 202, 82],
 			"attr": {
 				"id": "box1",
 				"class": "box"
 			},
-			"styleFinger": "254e6013f2452b42a44e210247884520",
 			"children": []
 		}, {
 			"tag": "div",
-			"rect": [5, 92, 202, 82],
 			"attr": {
 				"id": "box2",
 				"class": "box"
 			},
-			"styleFinger": "254e6013f2452b42a44e210247884520",
 			"children": []
 		}, {
 			"tag": "div",
-			"rect": [0, 224, 1418, 140],
 			"attr": {
 				"class": "text1"
 			},
-			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "textNode",
 				"text": "here is content 1 !"
 			}]
 		}, {
 			"tag": "div",
-			"rect": [0, 414, 1418, 140],
 			"attr": {
 				"id": "text",
 				"class": "text2"
 			},
-			"styleFinger": "7bc3f0f56cb0b3292008f9991d894fb4",
 			"children": [{
 				"tag": "textNode",
 				"text": "here is new content!"
 			}]
 		}, {
 			"tag": "div",
-			"rect": [50, 614, 1318, 0],
 			"attr": {
 				"id": "mocha"
-			},
-			"styleFinger": "0a41928f5dd97e430f3e398891c2fedb"
+			}
 		}]
 	}]
 }

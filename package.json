@@ -2,7 +2,7 @@
   "name": "cl-fetcher",
   "version": "1.0.0",
   "description": "fetch dymatic page data ",
-  "main": "index.js",
+  "main": "fetcher.js",
   "scripts": {
     "test": "mocha test/lib/*",
     "lint": "eslint src"

@@ -95,16 +95,16 @@ describe('Tree simplyfy', function () {
 		}, _callee3, undefined);
 	})));
 
-	it('should compress', _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
+	it('should cut no textNode branch 2', _asyncToGenerator(regeneratorRuntime.mark(function _callee4() {
 		var path, tree, res, expectPath, expectTree;
 		return regeneratorRuntime.wrap(function _callee4$(_context4) {
 			while (1) {
 				switch (_context4.prev = _context4.next) {
 					case 0:
-						path = _path2.default.join(__dirname, '../data/test_simplify_3.json');
+						path = _path2.default.join(__dirname, '../data/test_simplify_6.json');
 						tree = getTree(path);
-						res = _simplify2.default.compress(tree);
-						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_3.json');
+						res = _simplify2.default.pruning(tree);
+						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_6.json');
 						expectTree = getTree(expectPath);
 
 						_assert2.default.deepEqual(res, expectTree);
@@ -117,16 +117,16 @@ describe('Tree simplyfy', function () {
 		}, _callee4, undefined);
 	})));
 
-	it('should simplyfy', _asyncToGenerator(regeneratorRuntime.mark(function _callee5() {
+	it('should cut no textNode branch 2', _asyncToGenerator(regeneratorRuntime.mark(function _callee5() {
 		var path, tree, res, expectPath, expectTree;
 		return regeneratorRuntime.wrap(function _callee5$(_context5) {
 			while (1) {
 				switch (_context5.prev = _context5.next) {
 					case 0:
-						path = _path2.default.join(__dirname, '../data/test_simplify_4.json');
+						path = _path2.default.join(__dirname, '../data/test_simplify_7.json');
 						tree = getTree(path);
-						res = _simplify2.default.simplify(tree);
-						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_4.json');
+						res = _simplify2.default.pruning(tree);
+						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_7.json');
 						expectTree = getTree(expectPath);
 
 						_assert2.default.deepEqual(res, expectTree);
@@ -139,11 +139,55 @@ describe('Tree simplyfy', function () {
 		}, _callee5, undefined);
 	})));
 
-	it('should simplyfy', _asyncToGenerator(regeneratorRuntime.mark(function _callee6() {
+	it('should compress', _asyncToGenerator(regeneratorRuntime.mark(function _callee6() {
 		var path, tree, res, expectPath, expectTree;
 		return regeneratorRuntime.wrap(function _callee6$(_context6) {
 			while (1) {
 				switch (_context6.prev = _context6.next) {
+					case 0:
+						path = _path2.default.join(__dirname, '../data/test_simplify_3.json');
+						tree = getTree(path);
+						res = _simplify2.default.compress(tree);
+						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_3.json');
+						expectTree = getTree(expectPath);
+
+						_assert2.default.deepEqual(res, expectTree);
+
+					case 6:
+					case 'end':
+						return _context6.stop();
+				}
+			}
+		}, _callee6, undefined);
+	})));
+
+	it('should simplyfy', _asyncToGenerator(regeneratorRuntime.mark(function _callee7() {
+		var path, tree, res, expectPath, expectTree;
+		return regeneratorRuntime.wrap(function _callee7$(_context7) {
+			while (1) {
+				switch (_context7.prev = _context7.next) {
+					case 0:
+						path = _path2.default.join(__dirname, '../data/test_simplify_4.json');
+						tree = getTree(path);
+						res = _simplify2.default.simplify(tree);
+						expectPath = _path2.default.join(__dirname, '../data/test_simplify_res_4.json');
+						expectTree = getTree(expectPath);
+
+						_assert2.default.deepEqual(res, expectTree);
+
+					case 6:
+					case 'end':
+						return _context7.stop();
+				}
+			}
+		}, _callee7, undefined);
+	})));
+
+	it('should simplyfy', _asyncToGenerator(regeneratorRuntime.mark(function _callee8() {
+		var path, tree, res, expectPath, expectTree;
+		return regeneratorRuntime.wrap(function _callee8$(_context8) {
+			while (1) {
+				switch (_context8.prev = _context8.next) {
 					case 0:
 						path = _path2.default.join(__dirname, '../data/test_simplify_5.json');
 						tree = getTree(path);
@@ -155,9 +199,9 @@ describe('Tree simplyfy', function () {
 
 					case 6:
 					case 'end':
-						return _context6.stop();
+						return _context8.stop();
 				}
 			}
-		}, _callee6, undefined);
+		}, _callee8, undefined);
 	})));
 });
