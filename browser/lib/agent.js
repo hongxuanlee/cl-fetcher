@@ -277,6 +277,7 @@
 	/**
 	 * only adapted XMLHttpRequest object.
 	 **/
+
 	var xhrObjectList = [];
 
 	var proxyXhrOpen = function proxyXhrOpen() {

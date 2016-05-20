@@ -38,7 +38,8 @@
       "describe": true,
       "it": true,
       "phantom": true,
-      "expect": true
+      "expect": true,
+      "eventAgent": true
     },
     "parser": "babel-eslint",
     "rules": {

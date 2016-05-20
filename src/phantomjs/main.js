@@ -20,9 +20,11 @@ import Tree from './tree.js';
 import simplify from './simplify.js';
 import tdiff from './tdiff.js';
 
-let pageStateMatrix = [];
+let statusStack = [];
 let treeQueue = [];
 let status = 0;
+let route = 0;
+let statuMatrix = [];
 
 // add login cookie
 let addCookie = (cookieStr, url) => {
@@ -31,7 +33,6 @@ let addCookie = (cookieStr, url) => {
 	}
 	let cookieArr = util.cookie(cookieStr, url);
 	cookieArr.forEach((item) => {
-		log.debug(JSON.stringify(item));
 		phantom.addCookie(item);
 	});
 };
@@ -43,57 +44,20 @@ let evaluate = (...args) => {
 	let arr = args.slice(1);
 	return page.evaluate.apply(page, arr);
 };
-
-let isObject = (source) => {
-	if (!source) return false;
-	return source.toString() === '[object Object]';
-};
-
-let saveTree = (tree, name, options) => {
-	options = options || {};
-	let root = options.root ? options.root : phantom.libraryPath + '/../../data';
-	let dirname = options.dirname ? options.dirname : dirName;
-	if (!name) {
-		let time = Date.now();
-		name = time;
-	}
-	treeQueue.push(name);
-	if (isObject(tree)) {
-		tree = JSON.stringify(tree);
-	}
-	let dir = root + '/' + dirname;
-	if (fs.exists(dir) || fs.makeDirectory(dir)) {
-		log.debug('save json in  [' + dir + ']');
-		fs.write(dir + '/' + name + '.json', tree);
-		return true;
-	} else {
-		throw new Error('unable to make directory[' + dir + ']');
-	}
-};
-
-let getTree = (name, options) => {
-	options = options || {};
-	let root = options.root ? options.root : phantom.libraryPath + '/../../data';
-	let dirname = options.dirname ? options.dirname : dirName;
-	let file = root + '/' + dirname + '/' + name + '.json';
-	log.debug('get tree from ' + file);
-	if (fs.exists(file)) {
-		return JSON.parse(fs.read(file));
-	}
-};
-
+/**
+ * to estimate is identical with exist trees.
+ */
 let diffTree = (tree) => {
 	let len = treeQueue.length;
 	let compare;
 	if (len) {
 		log.debug('diff start!');
 		for (let i = 0; i < len; i++) {
-			compare = getTree(treeQueue[i]);
-			if (tdiff.diff(tree, compare)) {
-				return true;
+			compare = util.getTree(treeQueue[i],options);
+			if (! tdiff.diff(tree, compare)) {
+				return false;
 			}
 		}
-		return false;
 	}
 	return true;
 };
@@ -103,22 +67,23 @@ let diffTree = (tree) => {
  */
 let ergodicState = (curpage, pageContent, isRecover, remain) => {
 	if (!isRecover) {
-		log.info('this is status' + status);
 		let treeJson = curpage.evaluate(Tree);
-		log.debug('treeJson:', JSON.stringify(treeJson));
 		treeJson = JSON.parse(JSON.stringify(treeJson));
 		simplify.simplify(treeJson);
+		route++;
+		log.info('this is route' + route);
 		if (diffTree(treeJson)) {
-			let name = 'status' + status;
-			saveTree(treeJson, name);
 			status++;
+			log.info('this is status' + status);
+			let name = 'status' + status;
+			util.saveTree(treeJson, name, treeQueue, options);
 		}
 	}
-	let evaluateRet = evaluate(curpage, evaluateScript, {}, remain);
+	let evaluateRet = evaluate(curpage, evaluateScript, options, remain);
 	let eventRemain = evaluateRet.eventRemain;
 	let statusChange = evaluateRet.statusChange;
 	if (eventRemain > 0) {
-		pageStateMatrix.push({
+		statusStack.push({
 			content: pageContent,
 			eventRemain: eventRemain
 		});
@@ -128,8 +93,8 @@ let ergodicState = (curpage, pageContent, isRecover, remain) => {
 			ergodicState(curpage, pageContent);
 		}, 1000);
 	} else {
-		if (pageStateMatrix.length > 0) {
-			let curStatus = pageStateMatrix.pop();
+		if (statusStack.length > 0) {
+			let curStatus = statusStack.pop();
 			eventRemain = curStatus.eventRemain;
 			pageContent = curStatus.content;
 			curpage.close();
@@ -164,6 +129,7 @@ let openOriginalPage = (pageObject, url, callback) => {
 let pageHandle = (pageContent, isRecover, remain) => {
 	let curpage = WebPage.create();
 	curpage.setContent(pageContent, url);
+	curpage.navigationLocked = true;
 	curpage.onConsoleMessage = (msg) => {
 		log.debug(msg);
 	};
@@ -197,6 +163,10 @@ if (system.args.length === 1) {
 const url = system.args[1];
 const dirName = system.args[2];
 const cookieStr = system.args[3] || '';
+const config = util.getConfig();
+let options = config || {};
+options.dirName = dirName;
+
 let Main = () => {
 	addCookie(cookieStr, url);
 	let originalPage = WebPage.create();
@@ -207,3 +177,4 @@ let Main = () => {
 };
 
 Main();
+

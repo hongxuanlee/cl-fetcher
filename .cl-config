@@ -1,0 +1,6 @@
+{
+	"storage": "../../data" ,
+	"context": {
+	 	"deepTraversal" : false
+	} 
+}

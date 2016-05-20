@@ -1,0 +1,1 @@
+{"children":[{"attr":{"class":"container","id":"ctn"},"children":[{"tag":"textNode","text":"here is content 1 !","compress":["div"]},{"tag":"textNode","text":"here is new content!","compress":["div"]}],"tag":"div"}],"tag":"body"}

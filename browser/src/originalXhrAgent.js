@@ -1,6 +1,7 @@
 /**
  * only adapted XMLHttpRequest object.
  **/
+ 
 let xhrObjectList = [];
 
 let proxyXhrOpen = () => {

@@ -1,12 +1,11 @@
 /**
  * to excute script in brower context
  */
-module.exports = (option, remain) => {
+module.exports = (options, remain) => {
 
 	let FILTER_EVENT = ['xhrRequestOpen'];
 	let isXhr = false;
-	let eventList;
-
+	let eventCache = [];
 	let getEventList = () => {
 		let eventList = eventAgent.getEventList();
 		if (remain) {
@@ -34,7 +33,7 @@ module.exports = (option, remain) => {
 	 * filter customize event;
 	 */
 	let filterEvent = (eventList) => {
-		let filter = (option && option.filterEvent) ? option.filterEvent : FILTER_EVENT;
+		let filter = (options && options.filterEvent) ? options.filterEvent : FILTER_EVENT;
 		let l = eventList.length;
 		while (l--) {
 			let type = eventList[l].type;
@@ -50,39 +49,44 @@ module.exports = (option, remain) => {
 	 */
 	let execEvent = (eventList) => {
 		let item;
+		eventCache =[];
+		let isDeep = options.context && options.context.deepTraversal;
+		console.log('isDeep', isDeep);
 		while (!isXhr && (item = eventList.shift())) {
 			let node = item.node;
 			let type = item.type;
 			let handles = item.handles;
-			console.log(node, type);
-			if (node) {
-				// console.log('id:' + node.getAttribute('id') + ' class:' + node.className + 'tag:' + node.tagName);
-				handles.forEach(function(item) {
-					handleExec(node, item);
+			if (node.toString().indexOf('Element') > -1) {
+				handles.forEach(function(func) {
+					handleExec(node, func, type, isDeep);
 				});
 			}
 		}
 	};
 
-	let handleExec = (node, item) => {
+	let handleExec = (node, func, type, isDeep) => {
+		if(!node || isXhr){
+			return;
+		}
 		let children = node.childNodes;
-		let ev = {};
-		ev.target = node;
-		item(ev);
-		if (children) {
+		let ev = document.createEvent('HTMLEvents');
+		ev.initEvent(type, true, true);
+		node.dispatchEvent(ev);
+		if (children && isDeep) {
 			for (let i = 0, len = children.length; i < len; i++) {
 				let cur = children[i];
-				handleExec(cur, item);
+				handleExec(cur, func, type, isDeep);
 			}
 		}
-
 	};
 
 	let addXhrEvent = () => {
-		document.addEventListener('xhrRequestOpen', function(e) {
+		let XHRhandles = function(e) {
 			console.log('xhrOpen', JSON.stringify(e.opt.url));
+			eventCache.push(e.opt.url);
 			isXhr = true;
-		});
+		};
+		document.addEventListener('xhrRequestOpen',XHRhandles);
 	};
 
 	let main = () => {
